@@ -9,7 +9,9 @@ and on editing the hex i was able to open the image
 ![WhatsApp Image 2025-10-27 at 00 06 55](https://github.com/user-attachments/assets/9f36fbbf-780c-43bc-b14b-78c76764b49e)
 
 ![WhatsApp Image 2025-10-27 at 00 16 05](https://github.com/user-attachments/assets/7d71fb64-51c6-40dc-832e-03fd82854d50)
+
 I then changed the hex - 
+
 ![WhatsApp Image 2025-10-27 at 00 13 55](https://github.com/user-attachments/assets/25b00bd8-4022-41a6-babe-015f5a10b1b9)
 
 I was able to open the file 
