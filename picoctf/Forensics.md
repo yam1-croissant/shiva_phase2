@@ -1,5 +1,38 @@
 # trivial flag transfer protocol
 ## Flag: picoCTF
+In this challenge we need to extract the TFTP files from the given file and try to get the flag.
+## Steps - 
+I used Wireshark 4.2.2 to anaylze the file given.
+<img width="1604" height="769" alt="image" src="https://github.com/user-attachments/assets/a78d2d1b-4f64-43fd-8d87-3f460af467a9" />
+
+Here we extract the TFTP files, and we get these files. 
+<img width="558" height="251" alt="image" src="https://github.com/user-attachments/assets/6c4fb079-c10c-4476-9409-0cd3eea4514a" />
+
+Intructions.txt and plan, looked like they were encrypted so after posting it in dcode.com, it analyzed it as ROT-13 encryption. After decoding it we got these 
+
+Intructions.txt - TFTPDOESNTENCRYPTOURTRAFFICSOWEMUSTDISGUISEOURFLAGTRANSFER.FIGUREOUTAWAYTOHIDETHEFLAGANDIWILLCHECKBACKFORTHEPLAN
+
+Plan - 
+IUSEDTHEPROGRAMANDHIDITWITH-DUEDILIGENCE.CHECKOUTTHEPHOTOS
+
+From this, it hinted towards a secret information in the pictures, so i used steghide. 
+
+<img width="1157" height="455" alt="image" src="https://github.com/user-attachments/assets/ffcf0966-b439-4e83-a473-dcc9f314fb35" />
+
+Looks it needs a passpharse, so i used DUEDILIGENCE. 
+<img width="950" height="657" alt="image" src="https://github.com/user-attachments/assets/1e822bba-8f01-4bd8-851f-f0b835c44f4b" />
+
+I got the flag.txt 
+
+<img width="1326" height="422" alt="image" src="https://github.com/user-attachments/assets/0637406a-3d86-45f7-9956-e1687b34a192" />
+
+
+
+
+
+
+
+
 # tunn3l v1s10n
 ## Flag: picoCTF{qu1t3_a_v13w_2020}
 In this challenge we were given a corrupt BMP file, we had to fix it and find the flag.
