@@ -61,5 +61,14 @@ Now this is the key to the secret.enc file. Using openssl, to read contents, as 
 <img width="742" height="141" alt="image" src="https://github.com/user-attachments/assets/d1133893-ec84-4d3f-b912-e9b5ef7957d8" />
 
 # Custom Encryption
+## Flag:
 
 # mini RSA
+## Flag: picoCTF{n33d_a_lArg3r_e_606ce004}
+In this challenge, we are provided N, e and c (ciphertext) and we need to crack the cipher. 
+
+## Steps - 
+As we bascially know C = M^e mod N , where M is our message, and to get the message M = C^d mod N,. We can find d, using this criteria (d * e) ≡ 1 mod Φ(n). We can run a python script to solve this, i used dcode.com as it has an RSA solver.
+
+<img width="1869" height="1002" alt="image" src="https://github.com/user-attachments/assets/cfe92bcc-af52-41f0-84e9-ca571e6dc2bd" />
+
