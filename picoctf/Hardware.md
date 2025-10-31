@@ -2,7 +2,16 @@
 ## Flag: nite{101101100011}
 
 ## Steps - 
-manual bruteforced it. 
+x = 30478191278
+on coverting to binary
+
+11100011000101001000100101010101110
+
+then i added and extra 0 on the left side, because there are 36 inputes
+
+011100011000101001000100101010101110
+
+And then i manual bruteforced it. 
 
 <img width="524" height="791" alt="image" src="https://github.com/user-attachments/assets/0c7653f7-95aa-45d7-a27c-984ea5d05f5e" />
 
