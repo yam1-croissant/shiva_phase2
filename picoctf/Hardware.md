@@ -1,5 +1,5 @@
 # IQ TEST
-## Flag: nite{101101100011}
+## Flag: nite{100010011000}
 
 ## Steps - 
 x = 30478191278
@@ -13,7 +13,7 @@ then i added and extra 0 on the left side, because there are 36 inputes
 
 And then i manual bruteforced it. 
 
-<img width="524" height="791" alt="image" src="https://github.com/user-attachments/assets/0c7653f7-95aa-45d7-a27c-984ea5d05f5e" />
+
 
 # I like Logic
 ## Flag: <img width="643" height="35" alt="image" src="https://github.com/user-attachments/assets/4182f1eb-70b0-4408-8dae-c60f69edaf0e" />
