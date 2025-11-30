@@ -682,7 +682,497 @@ now, resuming the program in gdb it asks for the number, and i enter the number 
 
 # VeridisQuo
 
-## Flag:
+## Flag:byuctf{android_piece_0f_c4ke}
 
 ## Steps -
+
+Here we are provided with an apk file,and we have to retrieve the flag from it, i used JADX to extract the files into one single folder.
+
+The file had 2 folders "Resource" and "Source", i was able to find these files which gave me an idea of where to start. 
+
+<img width="727" height="273" alt="image" src="https://github.com/user-attachments/assets/c83a8c27-5233-4e30-9c49-501847037422" />
+
+In Utilities file-
+```
+package byuctf.downwiththefrench;
+
+import android.app.Activity;
+import android.widget.TextView;
+
+/* loaded from: classes3.dex */
+public class Utilities {
+    private Activity activity;
+
+    public Utilities(Activity activity) {
+        this.activity = activity;
+    }
+
+    public void cleanUp() {
+        TextView flag = (TextView) this.activity.findViewById(R.id.flagPart1);
+        flag.setText("");
+        TextView flag2 = (TextView) this.activity.findViewById(R.id.flagPart2);
+        flag2.setText("");
+        TextView flag3 = (TextView) this.activity.findViewById(R.id.flagPart3);
+        flag3.setText("");
+        TextView flag4 = (TextView) this.activity.findViewById(R.id.flagPart4);
+        flag4.setText("");
+        TextView flag5 = (TextView) this.activity.findViewById(R.id.flagPart5);
+        flag5.setText("");
+        TextView flag6 = (TextView) this.activity.findViewById(R.id.flagPart6);
+        flag6.setText("");
+        TextView flag7 = (TextView) this.activity.findViewById(R.id.flagPart7);
+        flag7.setText("");
+        TextView flag8 = (TextView) this.activity.findViewById(R.id.flagPart8);
+        flag8.setText("");
+        TextView flag9 = (TextView) this.activity.findViewById(R.id.flagPart9);
+        flag9.setText("");
+        TextView flag10 = (TextView) this.activity.findViewById(R.id.flagPart10);
+        flag10.setText("");
+        TextView flag11 = (TextView) this.activity.findViewById(R.id.flagPart11);
+        flag11.setText("");
+        TextView flag12 = (TextView) this.activity.findViewById(R.id.flagPart12);
+        flag12.setText("");
+        TextView flag13 = (TextView) this.activity.findViewById(R.id.flagPart13);
+        flag13.setText("");
+        TextView flag14 = (TextView) this.activity.findViewById(R.id.flagPart14);
+        flag14.setText("");
+        TextView flag15 = (TextView) this.activity.findViewById(R.id.flagPart15);
+        flag15.setText("");
+        TextView flag16 = (TextView) this.activity.findViewById(R.id.flagPart16);
+        flag16.setText("");
+        TextView flag17 = (TextView) this.activity.findViewById(R.id.flagPart17);
+        flag17.setText("");
+        TextView flag18 = (TextView) this.activity.findViewById(R.id.flagPart18);
+        flag18.setText("");
+        TextView flag19 = (TextView) this.activity.findViewById(R.id.flagPart19);
+        flag19.setText("");
+        TextView flag20 = (TextView) this.activity.findViewById(R.id.flagPart20);
+        flag20.setText("");
+        TextView flag21 = (TextView) this.activity.findViewById(R.id.flagPart21);
+        flag21.setText("");
+        TextView flag22 = (TextView) this.activity.findViewById(R.id.flagPart22);
+        flag22.setText("");
+        TextView flag23 = (TextView) this.activity.findViewById(R.id.flagPart23);
+        flag23.setText("");
+        TextView flag24 = (TextView) this.activity.findViewById(R.id.flagPart24);
+        flag24.setText("");
+        TextView flag25 = (TextView) this.activity.findViewById(R.id.flagPart25);
+        flag25.setText("");
+        TextView flag26 = (TextView) this.activity.findViewById(R.id.flagPart26);
+        flag26.setText("");
+        TextView flag27 = (TextView) this.activity.findViewById(R.id.flagPart27);
+        flag27.setText("");
+        TextView flag28 = (TextView) this.activity.findViewById(R.id.flagPart28);
+        flag28.setText("");
+    }
+}
+```
+
+Here what we understand is that the flag is split into 28 parts, to find the location of these flag id's, i used grep 
+
+```
+grep -R "flagPart"
+```
+
+With that I find traces of flagPart being used 
+
+```
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag = (TextView) this.activity.findViewById(R.id.flagPart1);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag2 = (TextView) this.activity.findViewById(R.id.flagPart2);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag3 = (TextView) this.activity.findViewById(R.id.flagPart3);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag4 = (TextView) this.activity.findViewById(R.id.flagPart4);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag5 = (TextView) this.activity.findViewById(R.id.flagPart5);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag6 = (TextView) this.activity.findViewById(R.id.flagPart6);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag7 = (TextView) this.activity.findViewById(R.id.flagPart7);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag8 = (TextView) this.activity.findViewById(R.id.flagPart8);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag9 = (TextView) this.activity.findViewById(R.id.flagPart9);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag10 = (TextView) this.activity.findViewById(R.id.flagPart10);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag11 = (TextView) this.activity.findViewById(R.id.flagPart11);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag12 = (TextView) this.activity.findViewById(R.id.flagPart12);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag13 = (TextView) this.activity.findViewById(R.id.flagPart13);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag14 = (TextView) this.activity.findViewById(R.id.flagPart14);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag15 = (TextView) this.activity.findViewById(R.id.flagPart15);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag16 = (TextView) this.activity.findViewById(R.id.flagPart16);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag17 = (TextView) this.activity.findViewById(R.id.flagPart17);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag18 = (TextView) this.activity.findViewById(R.id.flagPart18);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag19 = (TextView) this.activity.findViewById(R.id.flagPart19);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag20 = (TextView) this.activity.findViewById(R.id.flagPart20);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag21 = (TextView) this.activity.findViewById(R.id.flagPart21);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag22 = (TextView) this.activity.findViewById(R.id.flagPart22);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag23 = (TextView) this.activity.findViewById(R.id.flagPart23);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag24 = (TextView) this.activity.findViewById(R.id.flagPart24);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag25 = (TextView) this.activity.findViewById(R.id.flagPart25);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag26 = (TextView) this.activity.findViewById(R.id.flagPart26);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag27 = (TextView) this.activity.findViewById(R.id.flagPart27);
+sources/byuctf/downwiththefrench/Utilities.java:        TextView flag28 = (TextView) this.activity.findViewById(R.id.flagPart28);
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart1 = 0x7f0800c2;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart10 = 0x7f0800c3;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart11 = 0x7f0800c4;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart12 = 0x7f0800c5;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart13 = 0x7f0800c6;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart14 = 0x7f0800c7;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart15 = 0x7f0800c8;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart16 = 0x7f0800c9;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart17 = 0x7f0800ca;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart18 = 0x7f0800cb;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart19 = 0x7f0800cc;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart2 = 0x7f0800cd;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart20 = 0x7f0800ce;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart21 = 0x7f0800cf;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart22 = 0x7f0800d0;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart23 = 0x7f0800d1;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart24 = 0x7f0800d2;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart25 = 0x7f0800d3;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart26 = 0x7f0800d4;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart27 = 0x7f0800d5;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart28 = 0x7f0800d6;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart3 = 0x7f0800d7;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart4 = 0x7f0800d8;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart5 = 0x7f0800d9;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart6 = 0x7f0800da;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart7 = 0x7f0800db;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart8 = 0x7f0800dc;
+sources/byuctf/downwiththefrench/R.java:        public static int flagPart9 = 0x7f0800dd;
+resources/res/values/public.xml:    <public type="id" name="flagPart1" id="0x7f0800c2" />
+resources/res/values/public.xml:    <public type="id" name="flagPart10" id="0x7f0800c3" />
+resources/res/values/public.xml:    <public type="id" name="flagPart11" id="0x7f0800c4" />
+resources/res/values/public.xml:    <public type="id" name="flagPart12" id="0x7f0800c5" />
+resources/res/values/public.xml:    <public type="id" name="flagPart13" id="0x7f0800c6" />
+resources/res/values/public.xml:    <public type="id" name="flagPart14" id="0x7f0800c7" />
+resources/res/values/public.xml:    <public type="id" name="flagPart15" id="0x7f0800c8" />
+resources/res/values/public.xml:    <public type="id" name="flagPart16" id="0x7f0800c9" />
+resources/res/values/public.xml:    <public type="id" name="flagPart17" id="0x7f0800ca" />
+resources/res/values/public.xml:    <public type="id" name="flagPart18" id="0x7f0800cb" />
+resources/res/values/public.xml:    <public type="id" name="flagPart19" id="0x7f0800cc" />
+resources/res/values/public.xml:    <public type="id" name="flagPart2" id="0x7f0800cd" />
+resources/res/values/public.xml:    <public type="id" name="flagPart20" id="0x7f0800ce" />
+resources/res/values/public.xml:    <public type="id" name="flagPart21" id="0x7f0800cf" />
+resources/res/values/public.xml:    <public type="id" name="flagPart22" id="0x7f0800d0" />
+resources/res/values/public.xml:    <public type="id" name="flagPart23" id="0x7f0800d1" />
+resources/res/values/public.xml:    <public type="id" name="flagPart24" id="0x7f0800d2" />
+resources/res/values/public.xml:    <public type="id" name="flagPart25" id="0x7f0800d3" />
+resources/res/values/public.xml:    <public type="id" name="flagPart26" id="0x7f0800d4" />
+resources/res/values/public.xml:    <public type="id" name="flagPart27" id="0x7f0800d5" />
+resources/res/values/public.xml:    <public type="id" name="flagPart28" id="0x7f0800d6" />
+resources/res/values/public.xml:    <public type="id" name="flagPart3" id="0x7f0800d7" />
+resources/res/values/public.xml:    <public type="id" name="flagPart4" id="0x7f0800d8" />
+resources/res/values/public.xml:    <public type="id" name="flagPart5" id="0x7f0800d9" />
+resources/res/values/public.xml:    <public type="id" name="flagPart6" id="0x7f0800da" />
+resources/res/values/public.xml:    <public type="id" name="flagPart7" id="0x7f0800db" />
+resources/res/values/public.xml:    <public type="id" name="flagPart8" id="0x7f0800dc" />
+resources/res/values/public.xml:    <public type="id" name="flagPart9" id="0x7f0800dd" />
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart1"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart2"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart3"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart4"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart5"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart6"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart7"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart8"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart9"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart10"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart11"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart12"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart13"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart14"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart15"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart16"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart17"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart18"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart19"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart20"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart21"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart22"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart23"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart24"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart25"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart26"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart27"
+resources/res/layout/activity_main.xml:        android:id="@+id/flagPart28"
+grep: resources/classes2.dex: binary file matches
+grep: resources/classes3.dex: binary file matches
+```
+
+So i checked all these files / folder , and in the activity main- 
+
+```
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/homeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="b"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.066"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.022"/>
+    <TextView
+        android:id="@+id/flagPart1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="420dp"
+        android:text="}"
+        android:layout_marginEnd="216dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="616dp"
+        android:text="t"
+        android:layout_marginEnd="340dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="556dp"
+        android:text="a"
+        android:layout_marginEnd="332dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="676dp"
+        android:text="y"
+        android:layout_marginEnd="368dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="500dp"
+        android:text="c"
+        android:layout_marginEnd="252dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="636dp"
+        android:text="c"
+        android:layout_marginEnd="348dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="436dp"
+        android:text="d"
+        android:layout_marginEnd="364dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="496dp"
+        android:text="r"
+        android:layout_marginEnd="348dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="536dp"
+        android:text="n"
+        android:layout_marginEnd="336dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="456dp"
+        android:text="i"
+        android:layout_marginEnd="360dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="536dp"
+        android:text="0"
+        android:layout_marginEnd="276dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="516dp"
+        android:text="d"
+        android:layout_marginEnd="340dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="460dp"
+        android:text="k"
+        android:layout_marginEnd="232dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="656dp"
+        android:text="u"
+        android:layout_marginEnd="356dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="452dp"
+        android:text="p"
+        android:layout_marginEnd="320dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="476dp"
+        android:text="o"
+        android:layout_marginEnd="352dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="500dp"
+        android:text="c"
+        android:layout_marginEnd="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="596dp"
+        android:text="f"
+        android:layout_marginEnd="332dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="484dp"
+        android:text="e"
+        android:layout_marginEnd="308dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="436dp"
+        android:text="_"
+        android:layout_marginEnd="328dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="516dp"
+        android:text="e"
+        android:layout_marginEnd="292dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="536dp"
+        android:text="_"
+        android:layout_marginEnd="284dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="536dp"
+        android:text="f"
+        android:layout_marginEnd="268dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="468dp"
+        android:text="i"
+        android:layout_marginEnd="316dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="516dp"
+        android:text="_"
+        android:layout_marginEnd="260dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="480dp"
+        android:text="4"
+        android:layout_marginEnd="240dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="440dp"
+        android:text="e"
+        android:layout_marginEnd="224dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/flagPart28"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="576dp"
+        android:text="{"
+        android:layout_marginEnd="324dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout
+```
+
+i was able to find what the 29 parts were ( including the hometext)
+
+[  b}tayccdrni0dkupocfe_e_fi_4e{       ]
+
+but this does not look in order of the flagPart id's mentioned because isnt ,it is actually in order of the highest value of
+'layout_constraintBottom' , using Android Studio to visualize this. 
+
+<img width="1244" height="807" alt="image" src="https://github.com/user-attachments/assets/f22ca431-a6c7-419b-94a3-094a7c3ea3b7" />
+
 
