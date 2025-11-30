@@ -680,4 +680,9 @@ now, resuming the program in gdb it asks for the number, and i enter the number 
 
 <img width="521" height="223" alt="image" src="https://github.com/user-attachments/assets/a1718859-9d36-4bc7-8339-6dd131b6f08e" />
 
+# VeridisQuo
+
+## Flag:
+
+## Steps -
 
