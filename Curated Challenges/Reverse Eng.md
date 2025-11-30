@@ -1175,4 +1175,219 @@ but this does not look in order of the flagPart id's mentioned because isnt ,it 
 
 <img width="1244" height="807" alt="image" src="https://github.com/user-attachments/assets/f22ca431-a6c7-419b-94a3-094a7c3ea3b7" />
 
+# Dusty - dusty_noob
+
+## Flag: DawgCTF{FR33_C4R_W45H!}
+
+## Steps - 
+
+I ran the file in ghidra.
+
+Rust - 
+ _ZN3std2rt10lang_start...... = is the naming convention used for runtime startup function
+ _ZN10shinyclean4main17... = is the naming convention used for main function of program (shinyclean::main)
+
+```ruby
+void main(int param_1,undefined8 param_2)
+
+{
+  _ZN3std2rt10lang_start17h91ff47afc442db24E
+            (_ZN10shinyclean4main17h4b15dd54e331d693E,(long)param_1,param_2,0);
+  return;
+}
+```
+
+so this basically calls rust's runtime start function and execute the program's main function
+
+```
+it cannot just run your program it needs, runtime initalization, thread local storage bla bla, its like the arch of programing
+```
+
+So looking into the main()
+
+```ruby
+
+void _ZN10shinyclean4main17h4b15dd54e331d693E(void)
+
+{
+  int iVar1;
+  ulong uStack_100;
+  byte bStack_f1;
+  ulong uStack_f0;
+  byte abStack_de [23];
+  byte abStack_c7 [23];
+  ulong uStack_b0;
+  undefined1 auStack_a8 [48];
+  byte *pbStack_78;
+  code *pcStack_70;
+  byte *pbStack_68;
+  code *pcStack_60;
+  undefined1 auStack_58 [48];
+  byte *pbStack_28;
+  code *pcStack_20;
+  byte *pbStack_18;
+  code *pcStack_10;
+  byte *pbStack_8;
+  
+  memset(abStack_de,0,0x17);
+  abStack_c7[0] = 0x7b;
+  abStack_c7[1] = 0x5e;
+  abStack_c7[2] = 0x48;
+  abStack_c7[3] = 0x58;
+  abStack_c7[4] = 0x7c;
+  abStack_c7[5] = 0x6b;
+  abStack_c7[6] = 0x79;
+  abStack_c7[7] = 0x44;
+  abStack_c7[8] = 0x79;
+  abStack_c7[9] = 0x6d;
+  abStack_c7[10] = 0xc;
+  abStack_c7[0xb] = 0xc;
+  abStack_c7[0xc] = 0x60;
+  abStack_c7[0xd] = 0x7c;
+  abStack_c7[0xe] = 0xb;
+  abStack_c7[0xf] = 0x6d;
+  abStack_c7[0x10] = 0x60;
+  abStack_c7[0x11] = 0x68;
+  abStack_c7[0x12] = 0xb;
+  abStack_c7[0x13] = 10;
+  abStack_c7[0x14] = 0x77;
+  abStack_c7[0x15] = 0x1e;
+  abStack_c7[0x16] = 0x42;
+  uStack_b0 = 0;
+  do {
+    if (uStack_b0 < 0x17) {
+      bStack_f1 = abStack_c7[uStack_b0];
+      uStack_f0 = uStack_b0;
+      if (uStack_b0 < 0x17) goto LAB_00107c1d;
+      _ZN4core9panicking18panic_bounds_check17h8307ccead484a122E(uStack_b0,0x17,&PTR_DAT_00154590);
+    }
+    else {
+      _ZN4core9panicking18panic_bounds_check17h8307ccead484a122E(uStack_b0,0x17,&PTR_DAT_00154578);
+LAB_00107c1d:
+      abStack_de[uStack_f0] = bStack_f1 ^ 0x3f;
+      uStack_100 = uStack_b0 + 1;
+      if (0xfffffffffffffffe < uStack_b0) {
+        _ZN4core9panicking11panic_const24panic_const_add_overflow17hf2f4fb688348b3b0E
+                  (&PTR_DAT_001545a8);
+        goto LAB_00107c83;
+      }
+    }
+    uStack_b0 = uStack_100;
+    if (uStack_100 == 0x17) {
+LAB_00107c83:
+      iVar1 = _ZN3std7process2id17hcbcee05e6d949703E();
+      if (iVar1 == 0x1c1e8b2) {
+        pbStack_18 = abStack_de;
+        pcStack_10 = 
+        _ZN4core5array69_$LT$impl$u20$core..fmt..Debug$u20$for$u20$$u5b$T$u3b$$u20$N$u5d$$GT$3fmt17h f6f6e41e4948d91cE
+        ;
+        pbStack_8 = abStack_de;
+        pbStack_78 = abStack_de;
+        pcStack_20 = 
+        _ZN4core5array69_$LT$impl$u20$core..fmt..Debug$u20$for$u20$$u5b$T$u3b$$u20$N$u5d$$GT$3fmt17h f6f6e41e4948d91cE
+        ;
+        pcStack_60 = 
+        _ZN4core5array69_$LT$impl$u20$core..fmt..Debug$u20$for$u20$$u5b$T$u3b$$u20$N$u5d$$GT$3fmt17h f6f6e41e4948d91cE
+        ;
+        pcStack_70 = 
+        _ZN4core5array69_$LT$impl$u20$core..fmt..Debug$u20$for$u20$$u5b$T$u3b$$u20$N$u5d$$GT$3fmt17h f6f6e41e4948d91cE
+        ;
+        pbStack_68 = pbStack_78;
+        pbStack_28 = pbStack_78;
+        _ZN4core3fmt9Arguments6new_v117hfac9ebf3d99d1264E(auStack_a8,&DAT_001545c0,&pbStack_78);
+        _ZN3std2io5stdio6_print17he7d505d4f02a1803E(auStack_a8);
+      }
+      else {
+        _ZN4core3fmt9Arguments9new_const17hf72ed85907e377bbE(auStack_58,&PTR_DAT_001545e0);
+        _ZN3std2io5stdio6_print17he7d505d4f02a1803E(auStack_58);
+      }
+      return;
+    }
+  } while( true );
+}
+
+```
+
+memset , fills a block of memory with a value, so here we read that abStack_de is empty with 23 bytes size
+
+```ruby
+memset (*buffer,int value, size_t size)
+
+to make it empty we enter value as 0, which fills the array filled with 23 zeros
+```
+
+Next we understand that abStack_c7 is the encoded byte, and the _de is the decoded flag
+
+
+```
+bStack_f1 = abStack_c7[uStack_b0];
+      uStack_f0 = uStack_b0;
+.
+.
+.
+ abStack_de[uStack_f0] = bStack_f1 ^ 0x3f; ---------------here basically the byte to be encoded is encoded using XOR 0x3F. the [i] is just the index like it is numbered
+```
+
+This process of encoding is used to loop all the 23 bytes.
+
+```ruby
+  uStack_100 = uStack_b0 + 1; --------------------look here uStack_b0 is the index and its like saying n+1
+      if (0xfffffffffffffffe < uStack_b0) {
+        _ZN4core9panicking11panic_const24panic_const_add_overflow17hf2f4fb688348b3b0E
+                  (&PTR_DAT_001545a8);
+        goto LAB_00107c83;
+      }
+    }
+    uStack_b0 = uStack_100; --------- new index set at n+1
+    if (uStack_100 == 0x17) {
+```
+After encoding all the bytes, the program checks the PID using the 
+
+```
+iVar1 = std:process::id()
+
+if (iVar1 == 0x1c1e8b2) 
+
+then print flag
+else print no flog
+
+```
+
+ But the issue with that is the, PID required is in the millions quite literally, and apparents thats not possible meaning the flag wont print ---- makes sense why when i tried running the program in gdb it didnt run
+
+```
+
+ iVar1 = _ZN3std7process2id17hcbcee05e6d949703E();
+      if (iVar1 == 0x1c1e8b2) {
+        pbStack_18 = abStack_de;
+```
+
+So we need to modify the PID, and then decode the flag to do that, i use gdb
+
+```
+break _ZN10shinyclean4main17h4b15dd54e331d693E
+.
+.
+.
+disassemble
+.
+.
+.
+0x000055555555bc89 <+329>:	cmp    eax,0x1c1e8b2
+.
+.
+.
+breaking at the address where the program compares eax and pid
+```
+Now that we know that the address [0x000055555555bc89], i re run the program and break at the address and set $eax as the pid given and continue
+
+<img width="1900" height="831" alt="image" src="https://github.com/user-attachments/assets/a55d68f9-0c85-459a-9510-ffbb8684e22d" />
+
+Rewarded with - 
+
+[68,97,119,103,67,84,70,123,70,82,51,51,95,67,52,82,95,87,52,53,72,33,125]
+
+in ascii it is 
+
+DawgCTF{FR33_C4R_W45H!}
 
