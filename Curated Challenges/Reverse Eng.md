@@ -543,4 +543,141 @@ NjkSfTYaIi
 
 <img width="774" height="496" alt="image" src="https://github.com/user-attachments/assets/93c24297-fd87-439c-8126-38d63c3d2e4e" />
 
+# Time 
+
+## Flag: 
+
+## Steps- 
+
+In this challenge we have to enter the right number in the program to get the flag. After using ghidra i find what the program does 
+
+```ruby
+
+undefined8 main(void)
+
+{
+  undefined4 uVar1;
+  undefined8 uVar2;
+  long in_FS_OFFSET;
+  int iStack_18;
+  int iStack_14;
+  long lStack_10;
+  
+  lStack_10 = *(long *)(in_FS_OFFSET + 0x28);
+  uVar1 = time(0);
+  srand(uVar1);
+  iStack_14 = FUN_00400790();
+  puts("Welcome to the number guessing game!");
+  puts("I\'m thinking of a number. Can you guess it?");
+  puts("Guess right and you get a flag!");
+  printf("Enter your number: ");
+  fflush(stdout);
+  __isoc99_scanf(&DAT_00400bbc,&iStack_18);
+  printf("Your guess was %u.\n",iStack_18);
+  printf("Looking for %u.\n",iStack_14);
+  fflush(stdout);
+  if (iStack_14 == iStack_18) {
+    puts("You won. Guess was right! Here\'s your flag:");
+    giveFlag();
+  }
+  else {
+    puts("Sorry. Try again, wrong guess!");
+  }
+  fflush(stdout);
+  uVar2 = 0;
+  if (lStack_10 != *(long *)(in_FS_OFFSET + 0x28)) {
+    uVar2 = __stack_chk_fail();
+  }
+  return uVar2;
+}
+```
+
+giveflag function: 
+
+```ruby
+void giveFlag(void)
+
+{
+  long lVar1;
+  long in_FS_OFFSET;
+  undefined1 local_118 [264];
+  long local_10;
+  
+  local_10 = *(long *)(in_FS_OFFSET + 0x28);
+  memset(local_118,0,0x100);
+  lVar1 = fopen("/home/h3/flag.txt",&DAT_00400ad8);
+  if (lVar1 == 0) {
+    puts("Flag file not found!  Contact an H3 admin for assistance.");
+  }
+  else {
+    fgets(local_118,0x100,lVar1);
+    fclose(lVar1);
+    puts(local_118);
+  }
+  if (local_10 != *(long *)(in_FS_OFFSET + 0x28)) {
+    __stack_chk_fail();
+  }
+  return;
+}
+```
+FUN_00400790()
+ 
+```
+void FUN_00400790(void)
+
+{
+  rand();
+  return;
+}
+```
+
+So the program basically, using the 'time' to make the secret number, using the time in seconds as an input for srand(), and then the FUN_00400790() which just does rand(), we can use gdb, to break at the point where srand() is used and print the input it used, after that using a simple C program we can get the secret number.
+
+```
+uVar1 = time(0);
+  srand(uVar1);
+```
+this gave it away. 
+
+Now using gdb, i created a break point at srand()
+
+```ruby
+
+gdb-peda$ break srand()
+```
+
+After creating the break point and running the program, it stops 
+
+<img width="824" height="815" alt="image" src="https://github.com/user-attachments/assets/cbb24781-ccd9-4176-b986-733fe954c569" />
+
+using 
+```
+print $rdi
+```
+
+we get the input which was 
+```
+$1 = 0x692c1235
+```
+
+Once we got the input ( basically this is seconds in time in hex), using a simple C code we can calculate what the secret number is going to be 
+
+```ruby
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    unsigned int seed = 0x692c0f42;
+    srand(seed);
+    int secret = rand();
+    printf("u%\n",secret);
+    return 0;
+}
+```
+we get the number [1360983517]
+
+now, resuming the program in gdb it asks for the number, and i enter the number we got. 
+
+<img width="521" height="223" alt="image" src="https://github.com/user-attachments/assets/a1718859-9d36-4bc7-8339-6dd131b6f08e" />
+
 
