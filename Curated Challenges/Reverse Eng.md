@@ -1387,7 +1387,49 @@ Rewarded with -
 
 [68,97,119,103,67,84,70,123,70,82,51,51,95,67,52,82,95,87,52,53,72,33,125]
 
-in ascii it is 
+in ascii it is -
 
 DawgCTF{FR33_C4R_W45H!}
+
+# dusty_intermidate
+
+## Flag:
+
+## Steps -
+```
+_ZN3std4sync4mpsc7channel - creates a channel ( includes a sender that sends inputs to a supposed worker thread and reciever which receives it back, all this data is stored in variables such as 'ustack' 238) 
+```
+```
+mpsc::channel() to communicate between threads
+```
+
+_ZN3std2io5stdio5stdin..read_line - reads a full line of text from stdin into a String buffer (auStack_1b8) , so auStack_1b8 contains the input string
+
+```
+_ZN3std6thread5spawn17hc82cf960114777baE(&uStack_168,&uStack_150); - this is a worker thread
+```
+```
+  auVar6 = _ZN65_$LT$alloc..string..String$u20$as$u20$core..ops..deref..Deref$GT$5deref17h959f382726 60c74eE
+                     (auStack_1b8);
+  auVar6 = _ZN4core3str21_$LT$impl$u20$str$GT$5bytes17h9904487a65a9711fE(auVar6._0_8_,auVar6._8_8_);
+  auStack_130 = _ZN63_$LT$I$u20$as$u20$core..iter..traits..collect..IntoIterator$GT$9into_iter17h0da a883d0d141f71E
+                          (auVar6._0_8_,auVar6._8_8_);
+  while( true ) {
+    bStack_11a = _ZN81_$LT$core..str..iter..Bytes$u20$as$u20$core..iter..traits..iterator..Iterator$ GT$4next17h46258fd237e9d369E
+```
+this block? converts the string to bytes then sends each byte via _ZN3std4sync4mpsc15Sender$LT$T$GT$4send17h389f8f24c1d1c8a7E(&uStack_238); which is in form 
+
+Sender::send(&uStack_238, byte)
+
+After the loop finishes, it sends a 0 via send(&uStack_238, 0) to indicate end-of-stream
+
+```ruby
+auStack_118 = _ZN3std6thread19JoinHandle$LT$T$GT$4join17ha0b12799c7fbcb23E(&uStack_108)
+
+ _ZN5alloc3vec16Vec$LT$T$C$A$GT$4push17h4bb1f2c545013614E(auStack_e8);
+  }
+```
+this is join thread "JoinHandle::join" waits for the worker to finish to pushing the processed byres to reciever, after that the main function recieves data and pushes each data into [Vec<u8> auStack_e8]
+until the receiving stops . So auStack_e8 now contains the bytes received back
+
 
