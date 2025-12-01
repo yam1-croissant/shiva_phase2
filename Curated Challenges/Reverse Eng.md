@@ -1432,4 +1432,15 @@ auStack_118 = _ZN3std6thread19JoinHandle$LT$T$GT$4join17ha0b12799c7fbcb23E(&uSta
 this is join thread "JoinHandle::join" waits for the worker to finish to pushing the processed byres to reciever, after that the main function recieves data and pushes each data into [Vec<u8> auStack_e8]
 until the receiving stops . So auStack_e8 now contains the bytes received back
 
+```
+uVar3 = _ZN5alloc3vec16Vec$LT$T$C$A$GT$3len17h5a12cd3354265ffaE(auStack_e8);
+```
 
+here len, iterates for i from 0 to len-1 , (treat len as n)
+
+```
+    if (0x15 < uVar5) {
+      bStack_c9 = 0;
+```
+First it checks if i > 0x15 ( i>21), if it is then it fails and breaks, so the input must be =<22)
+So the input must produce a auStack_e8 that matches acStack_a5 for all indices 0..len-1 and must not exceed the max allowed length
