@@ -1444,3 +1444,32 @@ here len, iterates for i from 0 to len-1 , (treat len as n)
 ```
 First it checks if i > 0x15 ( i>21), if it is then it fails and breaks, so the input must be =<22)
 So the input must produce a auStack_e8 that matches acStack_a5 for all indices 0..len-1 and must not exceed the max allowed length
+
+
+these are the signed bytes of acStack_a5
+```
+acStack_a5[0] = -0x16;
+ acStack_a5[1] = -0x27;
+ acStack_a5[2] = '1';
+ acStack_a5[3] = '\"';
+ acStack_a5[4] = -0x2d;
+ acStack_a5[5] = -0x1a;
+ acStack_a5[6] = -0x69;
+ acStack_a5[7] = 'p';
+ acStack_a5[8] = '\x16';
+ acStack_a5[9] = -0x5e;
+ acStack_a5[10] = -0x58;
+ acStack_a5[0xb] = '\x1b';
+ acStack_a5[0xc] = 'a';
+ acStack_a5[0xd] = -4;
+ acStack_a5[0xe] = 'v';
+ acStack_a5[0xf] = 'h';
+ acStack_a5[0x10] = '{';
+ acStack_a5[0x11] = -0x55;
+ acStack_a5[0x12] = -0x48;
+ acStack_a5[0x13] = '\'';
+ acStack_a5[0x14] = 0x96;
+ auStack_b8 = auVar6;
+ ```
+So for the program to give us the flag, we need to send the bytes from the acStack_a5 unsigned, 
+
