@@ -1396,41 +1396,77 @@ DawgCTF{FR33_C4R_W45H!}
 ## Flag:
 
 ## Steps -
-```
-_ZN3std4sync4mpsc7channel - creates a channel ( includes a sender that sends inputs to a supposed worker thread and reciever which receives it back, all this data is stored in variables such as 'ustack' 238) 
-```
-```
-mpsc::channel() to communicate between threads
-```
 
-_ZN3std2io5stdio5stdin..read_line - reads a full line of text from stdin into a String buffer (auStack_1b8) , so auStack_1b8 contains the input string
+First we need to understand what the program actually does 
+
+### 1. Creates channels:
+   
+_ZN3std4sync4mpsc7channel - creates a channel ( channel includes a sender that sends inputs to a supposed worker thread and reciever which receives it back, all this data is stored in variables such as 'ustack' 238)
+
+[mpsc::channel() to communicate between threads]
+
+2 Channels were created -
+
+_ZN3std4sync4mpsc7channel...E(&uStack_218)
+_ZN3std4sync4mpsc7channel...E(&uStack_1d8)
+
+### 2. Gets our input:
+(_ZN3std2io5stdio6_print17he7d505d4f02a1803E(auStack_1a0) : prompts for an input
+
+it then reads the output into a string buffer which is auStack_1b8 , using _ZN3std2io5stdio5Stdin9read_line...E
+
+### 3. Spawns a Worker Thread (Flag Processing):
+
+It spawns a new thread using _ZN3std6thread5spawn17hc82cf960114777baE(&uStack_168,&uStack_150).
+
+The uStack_150 structure passed to the thread likely contains the Sender from the first channel (uStack_228) and the Sender from the second channel (uStack_1f8).
+
+It then iterates through the bytes of the user's input and sends each byte (uStack_1) to the first channel's Sender (&uStack_238).
+
+while( true ) { ... _ZN3std4sync4mpsc15Sender$LT$T$GT$4send...E(&uStack_238); }: This loop sends each byte of the user input into the channel to be processed by the worker thread.
+
+Finally, it sends a terminating value (likely 0) to the channel to signal the end of the input: _ZN3std4sync4mpsc15Sender$LT$T$GT$4send17h389f8f24c1d1c8a7E(&uStack_238,0);.
+
+### 4. Comparing the hardcoded byte array and flag check
+
+The main thread joins the worker thread (_ZN3std6thread19JoinHandle...4join...E). This means it waits for the worker thread to finish its processing.
+
+It then enters a loop to receive bytes from the second channel's Receiver (&uStack_1e8).
+
+while( true ) { ... bStack_cb = _ZN3std4sync4mpsc17Receiver$LT$T$GT$4recv...E(&uStack_1e8); ... _ZN5alloc3vec16Vec$LT$T$C$A$GT$4push...E(auStack_e8); }: The bytes received from the worker thread are collected into a Vec<u8> called auStack_e8.
+
+The crucial check happens here:
 
 ```
-_ZN3std6thread5spawn17hc82cf960114777baE(&uStack_168,&uStack_150); - this is a worker thread
+/* ... snip ... */
+uVar3 = _ZN5alloc3vec16Vec$LT$T$C$A$GT$3len17h5a12cd3354265ffaE(auStack_e8);
+auStack_c8 = _ZN63_$LT$I$u20$as$u20$core..iter..traits..collect..IntoIterator$GT$9into_iter17h5cd5 69066a9b2229E
+                     (0,uVar3);
+do {
+    // ... iterate from 0 up to len-1 ...
+    // ...
+    if (0x15 < uVar5) { // 0x15 is 21 in decimal. Check if index > 21.
+      bStack_c9 = 0;
+      goto LAB_0010d944; // Fail if length is too long
+    }
+    acStack_a5[0] = -0x16;
+    acStack_a5[1] = -0x27;
+    // ... snip ... (The hardcoded array of bytes)
+    acStack_a5[0x14] = 0x96; // 0x14 is 20, 0x15 is 21. Array size is 21.
+    // ...
+    cVar1 = acStack_a5[uVar5]; // Get expected byte
+    pcVar4 = (char *)_ZN81_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..index..Index$LT$I$ GT$$GT$5index17hc2c6deb65acbb394E(auStack_e8,uVar5,&PTR_DAT_00175b28);
+} while (cVar1 == *pcVar4); // Check if expected byte == received byte
+bStack_c9 = 0; // If loop breaks due to mismatch, set flag to false
+/* ... snip ... */
 ```
-```
-  auVar6 = _ZN65_$LT$alloc..string..String$u20$as$u20$core..ops..deref..Deref$GT$5deref17h959f382726 60c74eE
-                     (auStack_1b8);
-  auVar6 = _ZN4core3str21_$LT$impl$u20$str$GT$5bytes17h9904487a65a9711fE(auVar6._0_8_,auVar6._8_8_);
-  auStack_130 = _ZN63_$LT$I$u20$as$u20$core..iter..traits..collect..IntoIterator$GT$9into_iter17h0da a883d0d141f71E
-                          (auVar6._0_8_,auVar6._8_8_);
-  while( true ) {
-    bStack_11a = _ZN81_$LT$core..str..iter..Bytes$u20$as$u20$core..iter..traits..iterator..Iterator$ GT$4next17h46258fd237e9d369E
-```
-this block? converts the string to bytes then sends each byte via _ZN3std4sync4mpsc15Sender$LT$T$GT$4send17h389f8f24c1d1c8a7E(&uStack_238); which is in form 
+his comparison loop shows that the received bytes (auStack_e8), which are the result of the worker thread processing the user's input, must exactly match a hardcoded array of bytes, acStack_a5.
 
-Sender::send(&uStack_238, byte)
+The Key: The Hardcoded Byte Array
 
-After the loop finishes, it sends a 0 via send(&uStack_238, 0) to indicate end-of-stream
+The expected output (auStack_e8) must match the contents of acStack_a5. This array represents the encoded/transformed flag. Since the loop is a simple byte-by-byte comparison, you can reconstruct the sequence of bytes it expects.
 
-```ruby
-auStack_118 = _ZN3std6thread19JoinHandle$LT$T$GT$4join17ha0b12799c7fbcb23E(&uStack_108)
-
- _ZN5alloc3vec16Vec$LT$T$C$A$GT$4push17h4bb1f2c545013614E(auStack_e8);
-  }
-```
-this is join thread "JoinHandle::join" waits for the worker to finish to pushing the processed byres to reciever, after that the main function recieves data and pushes each data into [Vec<u8> auStack_e8]
-until the receiving stops . So auStack_e8 now contains the bytes received back
+Let's extract the hardcoded bytes for the first 21 elements (indices 0 to 20, since the loop condition is 0x15 < uVar5, meaning it allows indices up to 21 but the comparison is only for 0 to 20):
 
 ```
 uVar3 = _ZN5alloc3vec16Vec$LT$T$C$A$GT$3len17h5a12cd3354265ffaE(auStack_e8);
