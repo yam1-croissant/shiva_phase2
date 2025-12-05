@@ -38,6 +38,24 @@ HTB{unp2073c73d_532141_p2070c015_0n_53cu23_d3vic3s}
 ```
 # Red Devil
 
+## Flag: HTB{RF_H4ck1n6_1s_c00l!!!}
+
+## Steps - 
+
+The file given to us was a .cf32 file which on researching is a complex float 32 IQ data, its basically radio samples . To access the file i used Inspectrum and then URH ( universal radio hacker). With inspectrium i had no breakthrough so i switched to URH.
+
+I first thought it was FSK but after a little hit and trial i got that it is ASK, as with FSK or PSK the bits i was getting were either entirely only 1's or 0's .
+
+<img width="791" height="423" alt="image" src="https://github.com/user-attachments/assets/384a7f36-f733-46ec-b394-d7984a92ed76" />
+
+Under "analysis" i then checked from bits to ASCII and from NRZ to Mancherster II as the hint red devils and 'foot ball team' made sense. 
+
+<img width="798" height="397" alt="image" src="https://github.com/user-attachments/assets/d14b6906-be0a-4f38-8766-02493a780778" />
+
+
+<img width="783" height="409" alt="image" src="https://github.com/user-attachments/assets/65ef0c01-81f9-4c41-a873-7dc7073d3b51" />
+
+
 # Formware 
 
 # Speed thrills but kills
