@@ -74,13 +74,20 @@ which gave me the info i needed
 
 <img width="947" height="263" alt="d773fad0-9330-4f9e-a719-bd8d455fe3c3" src="https://github.com/user-attachments/assets/bf1d2a10-f679-4e84-8966-e032842766aa" />
 
-i installed squashfs tools, and after reading through the manual i 
+i installed squashfs tools, and after reading through the manual i did
 
 ```
 unsquashfs rootfs
 ```
 
-to get the contents of the file
+After extracting the files which i could ( some of it couldnt cuz of perms) i used grep
+
+```
+grep -R "{" -n .
+```
+<img width="927" height="885" alt="image" src="https://github.com/user-attachments/assets/1cf8afe0-3a8e-4889-a897-38cc5c2f90dc" />
+
+here i got the flag.
 
 # Speed thrills but kills
 
