@@ -58,6 +58,30 @@ Under "analysis" i then checked from bits to ASCII and from NRZ to Mancherster I
 
 # Formware 
 
+## Flag: HTB{N0w_Y0u_C4n_L0g1n}
+
+## Steps: 
+
+After extracting files from the zip file, i tried going through them thats when i got this 
+<img width="492" height="276" alt="image" src="https://github.com/user-attachments/assets/bc8e9d87-9404-445c-9a7d-4fc1d5aa30e4" />
+
+I did 
+
+```
+binwalk rootfs
+```
+which gave me the info i needed
+
+<img width="947" height="263" alt="d773fad0-9330-4f9e-a719-bd8d455fe3c3" src="https://github.com/user-attachments/assets/bf1d2a10-f679-4e84-8966-e032842766aa" />
+
+i installed squashfs tools, and after reading through the manual i 
+
+```
+unsquashfs rootfs
+```
+
+to get the contents of the file
+
 # Speed thrills but kills
 
 # Gates of Mayhem
