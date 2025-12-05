@@ -1,6 +1,6 @@
 # I like logic more
 
-## Flag: 
+## Flag: HTB{073c53212070_0n_23_d35}
 
 ## Steps - 
 
