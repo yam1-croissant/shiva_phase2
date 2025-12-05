@@ -28,7 +28,7 @@ After understanding and choosing the right channels, with the help of SPI (spy) 
 After that by changing to ascii, and scrolling through a whole lot of data 
 
 <img width="475" height="758" alt="image" src="https://github.com/user-attachments/assets/fdf53e74-f8fa-40ec-b6a5-9f3825c21083" />
-
+```
 name	start_time	duration	mosi	miso
 SPI	2.49367222	0.0000019	ÿ	H
 SPI	2.49367584	0.0000019	ÿ	T
@@ -83,7 +83,7 @@ SPI	2.49385002	0.0000019	ÿ	5
 SPI	2.49385366	0.0000019	ÿ	}
 SPI	2.49385728	0.0000019	ÿ	\r
 SPI	2.4938609	0.00000192	ÿ	\n
-
+```
 ```
 HTB{073c53212070_0n_23_d35}
 ```
