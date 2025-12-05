@@ -1,6 +1,6 @@
 # I like logic more
 
-## Flag: HTB{073c53212070_0n_23_d35}
+## Flag: HTB{unp2073c73d_532141_p2070c015_0n_53cu23_d3vic3s}
 
 ## Steps - 
 
@@ -34,7 +34,7 @@ so we get this -
 <img width="331" height="403" alt="image" src="https://github.com/user-attachments/assets/841cb0fc-3657-43fc-ba59-e3c758b5a5a0" />
 
 ```
-HTB{073c53212070_0n_23_d35}
+HTB{unp2073c73d_532141_p2070c015_0n_53cu23_d3vic3s}
 ```
 # Red Devil
 
