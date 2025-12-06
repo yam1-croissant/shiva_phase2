@@ -91,4 +91,37 @@ here i got the flag.
 
 # Speed thrills but kills
 
+## Flag: HTB{v1n_c42_h4ck1n9_15_1337!*0^}
+
+## Steps: 
+we are given a .sal file on opening we get
+
+<img width="1860" height="782" alt="image" src="https://github.com/user-attachments/assets/fccba864-aa0a-43b6-8e9c-f61308bd092f" />
+
+We see 2 channels wires, CAN - H and CAN - L and it has a voltage diffential 
+its baud rate is in the range 125K, 250K, 500K etc etc
+
+First we need to calculate the baud rate (bit rate) , to use a analyzer (CAN) - 
+
+Baud rate = 1 / bit width ( smallest)
+
+so here its 1 / 7.64 micro secs = 130,890 so the closest Baud rate is 125,000 
+
+<img width="672" height="430" alt="image" src="https://github.com/user-attachments/assets/7206f0b8-7d24-4d49-9057-23d1ee14890a" />
+
+<img width="1425" height="247" alt="image" src="https://github.com/user-attachments/assets/83c285a5-47e7-4a93-a2a6-27d04f366ab7" />
+
+After going through the data, i found the other parts of the flag. 
+
+<img width="337" height="574" alt="image" src="https://github.com/user-attachments/assets/5b585255-a106-4ab9-888b-6fbc7950dab5" />
+
+<img width="342" height="584" alt="image" src="https://github.com/user-attachments/assets/c7a9741e-0486-4741-a029-d1e6ad487bef" />
+
+```
+HTB{v1n_c42_h4ck1n9_15_1337!*0^}
+```
 # Gates of Mayhem
+
+## Flag: 
+
+## Steps: 
