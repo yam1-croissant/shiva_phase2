@@ -1419,7 +1419,7 @@ it then reads the output into a string buffer which is auStack_1b8 , using _ZN3s
 
 It spawns a new thread using _ZN3std6thread5spawn17hc82cf960114777baE(&uStack_168,&uStack_150).
 
-The uStack_150 structure passed to the thread likely contains the Sender from the first channel (uStack_228) and the Sender from the second channel (uStack_1f8).
+The uStack_150 structure passed to the thread contains the Sender from the first channel (uStack_228) and the Sender from the second channel (uStack_1f8).
 
 It then iterates through the bytes of the user's input and sends each byte (uStack_1) to the first channel's Sender (&uStack_238).
 
@@ -1438,7 +1438,6 @@ while( true ) { ... bStack_cb = _ZN3std4sync4mpsc17Receiver$LT$T$GT$4recv...E(&u
 The crucial check happens here:
 
 ```
-/* ... snip ... */
 uVar3 = _ZN5alloc3vec16Vec$LT$T$C$A$GT$3len17h5a12cd3354265ffaE(auStack_e8);
 auStack_c8 = _ZN63_$LT$I$u20$as$u20$core..iter..traits..collect..IntoIterator$GT$9into_iter17h5cd5 69066a9b2229E
                      (0,uVar3);
@@ -1451,14 +1450,14 @@ do {
     }
     acStack_a5[0] = -0x16;
     acStack_a5[1] = -0x27;
-    // ... snip ... (The hardcoded array of bytes)
+    .
+    .
     acStack_a5[0x14] = 0x96; // 0x14 is 20, 0x15 is 21. Array size is 21.
     // ...
     cVar1 = acStack_a5[uVar5]; // Get expected byte
     pcVar4 = (char *)_ZN81_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..index..Index$LT$I$ GT$$GT$5index17hc2c6deb65acbb394E(auStack_e8,uVar5,&PTR_DAT_00175b28);
 } while (cVar1 == *pcVar4); // Check if expected byte == received byte
 bStack_c9 = 0; // If loop breaks due to mismatch, set flag to false
-/* ... snip ... */
 ```
 his comparison loop shows that the received bytes (auStack_e8), which are the result of the worker thread processing the user's input, must exactly match a hardcoded array of bytes, acStack_a5.
 
@@ -1507,5 +1506,91 @@ acStack_a5[0] = -0x16;
  acStack_a5[0x14] = 0x96;
  auStack_b8 = auVar6;
  ```
-So for the program to give us the flag, we need to send the bytes from the acStack_a5 unsigned, 
+
+So for the program to give us the flag, we need to input the bytes according to a loop, that transforms input into the values which when compared to the signed bytes, we get th flag.
+
+The loop - 
+
+```ruby
+
+void _ZN11shinyclean21a17hd3f8925b0dcabf9dE
+                           (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+
+{
+   code *pcVar1;
+   byte bVar2;
+   int iVar3;
+   ulong uVar4;
+   char extraout_DL;
+   undefined1 extraout_DL_00;
+   undefined8 local_148;
+   undefined8 local_140;
+   undefined8 local_138;
+   undefined8 local_130;
+   byte local_121;
+   int local_120;
+   byte local_11c;
+   char local_11b;
+   byte local_11a;
+   undefined1 local_119;
+   undefined1 local_118 [279];
+   char local_1;
+   
+   local_121 = 0x75;
+   local_120 = 0;
+   local_148 = param_1;
+   local_140 = param_2;
+   local_138 = param_3;
+   local_130 = param_4;
+   do {
+       local_11c = _ZN3std4sync4mpsc17Receiver$LT$T$GT$4recv17h1501a28c0723fe06E(&local_148);
+       local_11c = local_11c & 1;
+       local_11b = extraout_DL;
+       if (local_11c != 0) {
+LAB_0010d2d8:
+           _ZN4core3ptr54drop_in_place$LT$std..sync..mpsc..Sender$LT$u8$GT$$GT$17h9f26fb0ffc049667E
+                             (&local_138);
+           _ZN4core3ptr56drop_in_place$LT$std..sync..mpsc..Receiver$LT$u8$GT$$GT$17ha4db3b5bf343c251E
+                             (&local_148);
+           return;
+       }
+       bVar2 = local_11a;
+       local_1 = extraout_DL;
+       if (extraout_DL == '\0') break;
+       _ZN97_$LT$core..num..wrapping..Wrapping$LT$u8$GT$$u20$as$u20$core..ops..arith..AddAssign$LT$u8$G T$$GT$10add_assign17h193f78ffab3214edE
+                          (&local_121,extraout_DL);
+       memcpy(local_118,&DAT_00161298,0x100);
+       uVar4 = (ulong)local_121;
+       if (0xff < uVar4) {
+           _ZN4core9panicking18panic_bounds_check17h8307ccead484a122E(uVar4,0x100,&PTR_DAT_00175ab8);
+LAB_0010d36b:
+                                     /* WARNING: Does not return */
+           pcVar1 = (code *)invalidInstructionException();
+           (*pcVar1)();
+       }
+       local_11a = _ZN3std4sync4mpsc15Sender$LT$T$GT$4send17h389f8f24c1d1c8a7E
+                                                (&local_138,local_118[uVar4]);
+       local_11a = local_11a & 1;
+       local_119 = extraout_DL_00;
+       if (local_11a != 0) goto LAB_0010d2d8;
+       iVar3 = local_120 + 1;
+       if (SCARRY4(local_120,1)) {
+           _ZN4core9panicking11panic_const24panic_const_add_overflow17hf2f4fb688348b3b0E
+                             (&PTR_DAT_00175ad0);
+           goto LAB_0010d36b;
+       }
+       local_120 = iVar3;
+       bVar2 = 0;
+   } while (iVar3 != 0x15);
+   local_11a = bVar2;
+   _ZN4core3ptr54drop_in_place$LT$std..sync..mpsc..Sender$LT$u8$GT$$GT$17h9f26fb0ffc049667E
+                      (&local_138);
+   _ZN4core3ptr56drop_in_place$LT$std..sync..mpsc..Receiver$LT$u8$GT$$GT$17ha4db3b5bf343c251E
+                      (&local_148);
+   return;
+}
+```
+
+
+<img width="417" height="805" alt="image" src="https://github.com/user-attachments/assets/b71331cf-f41c-4089-b8be-d3e9c1bf48f0" />
 
