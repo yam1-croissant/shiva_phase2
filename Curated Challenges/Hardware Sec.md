@@ -122,6 +122,20 @@ HTB{v1n_c42_h4ck1n9_15_1337!*0^}
 ```
 # Gates of Mayhem
 
-## Flag: 
+## Flag: 011000110110100101101001101000111010000110100001110101010110110011110110011000100110100101101101100111100100001110001110011101101100001100011110110001110001101111111011001110110000011011101000001101111111000110011011011100101101111111011010011011000001000011110111000110011001110001010111110111011000111100100000111000011001001100010000110001011001010010011101000100110110111011100010001011101101101010101111
+
 
 ## Steps: 
+
+<img width="1160" height="759" alt="image" src="https://github.com/user-attachments/assets/55fe8de6-97ab-4b77-b931-44a876c6ce0e" />
+
+
+The transistors are placed such that they form logic gates ( Resistor - Transistor Logic)
+
+https://docs.google.com/spreadsheets/d/1LlSutEi1KJd9pugVLaHP2_mlvtbURqGiuXwl28nqYmc/edit?usp=sharing
+
+<img width="587" height="668" alt="image" src="https://github.com/user-attachments/assets/250f6e1b-37b9-495e-9607-b6c5db5b9977" />
+
+<img width="575" height="539" alt="image" src="https://github.com/user-attachments/assets/37384e1c-e86b-4514-b52a-011d8b2e4bfe" />
+
+<img width="517" height="522" alt="image" src="https://github.com/user-attachments/assets/2463c936-fa4f-45c1-9402-176c5e6b24bb" />
