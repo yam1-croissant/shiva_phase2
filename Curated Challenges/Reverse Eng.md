@@ -1393,7 +1393,10 @@ DawgCTF{FR33_C4R_W45H!}
 
 # dusty_intermidate
 
-## Flag:
+## Flag: 
+
+<img width="366" height="41" alt="image" src="https://github.com/user-attachments/assets/1ed39117-e93e-4b43-9612-261f70ef5e5a" />
+
 
 ## Steps -
 
@@ -1459,13 +1462,7 @@ do {
 } while (cVar1 == *pcVar4); // Check if expected byte == received byte
 bStack_c9 = 0; // If loop breaks due to mismatch, set flag to false
 ```
-his comparison loop shows that the received bytes (auStack_e8), which are the result of the worker thread processing the user's input, must exactly match a hardcoded array of bytes, acStack_a5.
-
-The Key: The Hardcoded Byte Array
-
-The expected output (auStack_e8) must match the contents of acStack_a5. This array represents the encoded/transformed flag. Since the loop is a simple byte-by-byte comparison, you can reconstruct the sequence of bytes it expects.
-
-Let's extract the hardcoded bytes for the first 21 elements (indices 0 to 20, since the loop condition is 0x15 < uVar5, meaning it allows indices up to 21 but the comparison is only for 0 to 20):
+this comparison loop shows that the received bytes (auStack_e8), which are the result of the worker thread processing the user's input, must exactly match a hardcoded array of bytes, acStack_a5.
 
 ```
 uVar3 = _ZN5alloc3vec16Vec$LT$T$C$A$GT$3len17h5a12cd3354265ffaE(auStack_e8);
@@ -1591,6 +1588,55 @@ LAB_0010d36b:
 }
 ```
 
-
 <img width="417" height="805" alt="image" src="https://github.com/user-attachments/assets/b71331cf-f41c-4089-b8be-d3e9c1bf48f0" />
+
+
+# Dusty_pro
+
+## Flag: DawgCTF{4LL_RU57_N0_C4R!}
+
+## Steps - 
+
+The program XOR's a 25 byte constant with the 4 bytes of the input int we provide when we run the program repeatedly, then computes sha256 of the result it gets and compares it with a stored ASCII hex .
+
+```ruby
+abStack_1b1[0]  = 0xcf;
+abStack_1b1[1]  = 0x09;
+abStack_1b1[2]  = 0x1e;
+abStack_1b1[3]  = 0xb3;
+abStack_1b1[4]  = 200;
+abStack_1b1[5]  = 0x3c;
+abStack_1b1[6]  = 0x2f;
+abStack_1b1[7]  = 0xaf;
+abStack_1b1[8]  = 0xbf;
+abStack_1b1[9]  = 0x24;
+abStack_1b1[10] = 0x25;
+abStack_1b1[11] = 0x8b;
+abStack_1b1[12] = 0xd9;
+abStack_1b1[13] = 0x3d;
+abStack_1b1[14] = 0x5c;
+abStack_1b1[15] = 0xe3;
+abStack_1b1[16] = 0xd4;
+abStack_1b1[17] = 0x26;
+abStack_1b1[18] = 0x59;
+abStack_1b1[19] = 0x8b;
+abStack_1b1[20] = 200;
+abStack_1b1[21] = 0x5c;
+abStack_1b1[22] = 0x3b;
+abStack_1b1[23] = 0xf5;
+abStack_1b1[24] = 0xf6;
+```
+
+Since the past 2 challenges had the part of the flag 'DawgCTF{' that gives us 8 bytes and since XOR is reversible we can do this
+
+```
+key[0] = 0xcf ^ ord('D') = 0x8b 
+key[1] = 0x09 ^ ord('a') = 0x68
+key[2] = 0x1e ^ ord('w') = 0x69
+key[3] = 0xb3 ^ ord('g') = 0xd4
+```
+
+Converting [8b 68 69 d4] to little endian we get 3563677835
+
+<img width="486" height="79" alt="image" src="https://github.com/user-attachments/assets/72bf3e1d-ffaf-4fc8-9e94-c38429a0fa6f" />
 
